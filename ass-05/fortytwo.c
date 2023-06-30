@@ -1,5 +1,6 @@
+// SPDX-License-Identifier: GPL-2.0
 /*
- * fortytwo.c - A sample misc device driver.
+ * fortytwo - A sample misc device driver.
  *	- rgilles@student.42.fr
  */
 
@@ -9,33 +10,33 @@
 #include <linux/fs.h>
 #include <linux/miscdevice.h>
 
-static ssize_t ft_misc_write(struct file* file, const char __user * buf, size_t len, loff_t* ppos) 
+static ssize_t ft_misc_write(struct file *file, const char __user *buf, size_t len, loff_t *ppos)
 {
 	char tmp[8];
 	ssize_t l;
 
 	l = simple_write_to_buffer(tmp, sizeof(tmp), ppos, buf, len);
 	if (l == 7 && memcmp(tmp, "rgilles", l) == 0)
-		return(len);
+		return len;
 	else
-		return(-EINVAL);
+		return -EINVAL;
 }
 
-static ssize_t ft_misc_read(struct file* file, char __user * buf, size_t count, loff_t* f_pos) 
+static ssize_t ft_misc_read(struct file *file, char __user *buf, size_t count, loff_t *f_pos)
 {
-    return (simple_read_from_buffer(buf, count, f_pos, "rgilles", 7));
+	return simple_read_from_buffer(buf, count, f_pos, "rgilles", 7);
 }
 
 static const struct file_operations fops = {
-    .owner          = THIS_MODULE,
-    .write          = ft_misc_write,
-    .read           = ft_misc_read,
+	.owner          = THIS_MODULE,
+	.write          = ft_misc_write,
+	.read           = ft_misc_read,
 };
 
 struct miscdevice ft_misc_device = {
-    .minor = MISC_DYNAMIC_MINOR,
-    .name = "fortytwo",
-    .fops = &fops,
+	.minor = MISC_DYNAMIC_MINOR,
+	.name = "fortytwo",
+	.fops = &fops,
 };
 
 static int __init fortytwo_init(void)
@@ -45,10 +46,10 @@ static int __init fortytwo_init(void)
 	error = misc_register(&ft_misc_device);
 	if (error) {
 		pr_err("fortytwo misc device driver failed to load!\n");
-		return(-1);
+		return -1;
 	}
 	pr_info("fortytwo misc device driver successfully loaded!\n");
-	return(0);
+	return 0;
 }
 
 static void __exit fortytwo_exit(void)

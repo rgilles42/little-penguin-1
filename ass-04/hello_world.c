@@ -1,5 +1,6 @@
+// SPDX-License-Identifier: GPL-2.0
 /*
- * hello_world.c - A sample kernel module.
+ * hello_world - A sample kernel module.
  *	- rgilles@student.42.fr
  */
 
@@ -9,7 +10,7 @@
 int init_module(void)
 {
 		printk(KERN_INFO "Hello world !\n");
-		return(0);
+		return 0;
 }
 
 void cleanup_module(void)
