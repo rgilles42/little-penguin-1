@@ -1,6 +1,6 @@
 /*
- * hello_world.c - A sample kernel module.	
- * 	- rgilles@student.42.fr
+ * hello_world.c - A sample kernel module.
+ *	- rgilles@student.42.fr
  */
 
 #include <linux/module.h>

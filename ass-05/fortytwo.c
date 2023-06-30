@@ -1,6 +1,6 @@
 /*
- * fortytwo.c - A sample misc device driver.	
- * 	- rgilles@student.42.fr
+ * fortytwo.c - A sample misc device driver.
+ *	- rgilles@student.42.fr
  */
 
 #include <linux/kernel.h>
@@ -9,7 +9,8 @@
 #include <linux/fs.h>
 #include <linux/miscdevice.h>
 
-static ssize_t ft_misc_write(struct file* file, const char __user * buf, size_t len, loff_t* ppos) {
+static ssize_t ft_misc_write(struct file* file, const char __user * buf, size_t len, loff_t* ppos) 
+{
 	char tmp[8];
 	ssize_t l;
 
@@ -20,7 +21,8 @@ static ssize_t ft_misc_write(struct file* file, const char __user * buf, size_t 
 		return(-EINVAL);
 }
 
-static ssize_t ft_misc_read(struct file* file, char __user * buf, size_t count, loff_t* f_pos) {
+static ssize_t ft_misc_read(struct file* file, char __user * buf, size_t count, loff_t* f_pos) 
+{
     return (simple_read_from_buffer(buf, count, f_pos, "rgilles", 7));
 }
 
@@ -29,6 +31,7 @@ static const struct file_operations fops = {
     .write          = ft_misc_write,
     .read           = ft_misc_read,
 };
+
 struct miscdevice ft_misc_device = {
     .minor = MISC_DYNAMIC_MINOR,
     .name = "fortytwo",
@@ -44,14 +47,14 @@ static int __init fortytwo_init(void)
 		pr_err("fortytwo misc device driver failed to load!\n");
 		return(-1);
 	}
-	pr_info("fortytwo misc device driver succesfully loaded!\n");
+	pr_info("fortytwo misc device driver successfully loaded!\n");
 	return(0);
 }
 
 static void __exit fortytwo_exit(void)
 {
 	misc_deregister(&ft_misc_device);
-	pr_info("fortytwo misc device driver succesfully removed.\n");
+	pr_info("fortytwo misc device driver successfully removed.\n");
 }
 
 module_init(fortytwo_init);

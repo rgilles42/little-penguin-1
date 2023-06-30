@@ -1,6 +1,6 @@
 /*
- * fortytwo.c - A sample debugfs filesystem.	
- * 	- rgilles@student.42.fr
+ * fortytwo.c - A sample debugfs filesystem.
+ *	- rgilles@student.42.fr
  */
 
 #include <linux/kernel.h>
@@ -11,12 +11,13 @@
 #include <linux/jiffies.h>
 #include <linux/mutex.h>
 
-struct dentry* directory;
-struct dentry* id;
-struct dentry* jiffies_whisperer;
-struct dentry* foo;
+struct dentry *directory;
+struct dentry *id;
+struct dentry *jiffies_whisperer;
+struct dentry *foo;
 
-static ssize_t ft_id_write(struct file* file, const char __user * buf, size_t len, loff_t* ppos) {
+static ssize_t ft_id_write(struct file* file, const char __user * buf, size_t len, loff_t* ppos) 
+{
 	char str[8];
 	ssize_t l;
 
@@ -27,7 +28,8 @@ static ssize_t ft_id_write(struct file* file, const char __user * buf, size_t le
 		return(-EINVAL);
 }
 
-static ssize_t ft_id_read(struct file* file, char __user * buf, size_t count, loff_t* f_pos) {
+static ssize_t ft_id_read(struct file* file, char __user * buf, size_t count, loff_t* f_pos) 
+{
     return(simple_read_from_buffer(buf, count, f_pos, "rgilles", 7));
 }
 
@@ -37,7 +39,8 @@ static const struct file_operations id_fops = {
     .read           = ft_id_read,
 };
 
-static ssize_t ft_jiffies_read(struct file* file, char __user * buf, size_t count, loff_t* f_pos) {
+static ssize_t ft_jiffies_read(struct file* file, char __user * buf, size_t count, loff_t* f_pos) 
+{
 	char str[64];
 	ssize_t len;
 
@@ -52,10 +55,11 @@ static const struct file_operations jiffies_fops = {
 
 DEFINE_MUTEX(foo_mutex);
 char foo_buf[PAGE_SIZE];
-size_t foo_len = 0;
+size_t foo_len;
 
-static ssize_t ft_foo_write(struct file* file, const char __user * buf, size_t len, loff_t *f_pos) {
-    size_t l; 
+static ssize_t ft_foo_write(struct file* file, const char __user * buf, size_t len, loff_t *f_pos) 
+{
+    size_t l;
 
     mutex_lock(&foo_mutex);
     l = simple_write_to_buffer(foo_buf, PAGE_SIZE, f_pos, buf, len);
@@ -64,7 +68,8 @@ static ssize_t ft_foo_write(struct file* file, const char __user * buf, size_t l
     return l;
 }
 
-static ssize_t ft_foo_read(struct file* file, char __user * buf, size_t count, loff_t* f_pos) {
+static ssize_t ft_foo_read(struct file* file, char __user * buf, size_t count, loff_t* f_pos) 
+{
 	ssize_t ret;
 
 	mutex_lock(&foo_mutex);
@@ -75,8 +80,8 @@ static ssize_t ft_foo_read(struct file* file, char __user * buf, size_t count, l
 
 static struct file_operations foo_fops = {
 	.owner			= THIS_MODULE,
-	.write 			= ft_foo_write,
-	.read 			= ft_foo_read,
+	.write			= ft_foo_write,
+	.read			= ft_foo_read,
 };
 
 static int __init fortytwo_init(void)
@@ -90,24 +95,24 @@ static int __init fortytwo_init(void)
 	if (IS_ERR(id)) {
 		debugfs_remove(directory);
 		pr_err("fortytwo debugfs failed to load!\n");
-        return(-1);
+	return(-1);
 	}
 	jiffies_whisperer = debugfs_create_file("jiffies", 0444, directory, NULL, &jiffies_fops);
     if (IS_ERR(jiffies_whisperer)) {
 		debugfs_remove(id);
-        debugfs_remove(directory);
-        pr_err("fortytwo debugfs failed to load!\n");
-        return(-1);
+	debugfs_remove(directory);
+	pr_err("fortytwo debugfs failed to load!\n");
+	return(-1);
 	}
 	foo = debugfs_create_file("foo", 0644, directory, NULL, &foo_fops);
     if (IS_ERR(foo)) {
 		debugfs_remove(jiffies_whisperer);
 		debugfs_remove(id);
 		debugfs_remove(directory);
-        pr_err("fortytwo debugfs failed to load!\n");
-        return(-1);
+	pr_err("fortytwo debugfs failed to load!\n");
+	return(-1);
 	}
-	pr_info("fortytwo debugfs succesfully loaded!\n");
+	pr_info("fortytwo debugfs successfully loaded!\n");
 	return(0);
 }
 
@@ -117,7 +122,7 @@ static void __exit fortytwo_exit(void)
 	debugfs_remove(jiffies_whisperer);
     debugfs_remove(id);
     debugfs_remove(directory);
-	pr_info("fortytwo dewbugfs succesfully removed.\n");
+	pr_info("fortytwo dewbugfs successfully removed.\n");
 }
 
 module_init(fortytwo_init);
