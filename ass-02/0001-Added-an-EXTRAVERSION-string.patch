@@ -1,7 +1,5 @@
 From: Raphael GILLES <rgilles@student.42.fr>
-Date: Sat, 4 Mar 2023 17:15:40 +0100
-Subject: [PATCH] kernel build: added an EXTRAVERSION string
-
+Subject: [PATCH 1/1] kernel build: Added an EXTRAVERSION string
 Add the string "-thor_kernel" to the EXTRAVERSION variable in Makefile
 
 Signed-off-by: Raphael GILLES <rgilles@student.42.fr>
@@ -10,12 +8,12 @@ Signed-off-by: Raphael GILLES <rgilles@student.42.fr>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index aa26f34a9..8a658312b 100644
+index 48a044bfe..f3317e95c 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -2,7 +2,7 @@
  VERSION = 6
- PATCHLEVEL = 2
+ PATCHLEVEL = 4
  SUBLEVEL = 0
 -EXTRAVERSION =
 +EXTRAVERSION = -thor_kernel
