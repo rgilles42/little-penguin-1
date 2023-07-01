@@ -586,6 +586,3 @@
 [    2.038873] Adding 4194300k swap on /dev/sda4.  Priority:1 extents:1 across:4194300k 
 [    2.144436] EXT4-fs (sda1): mounted filesystem e10690b9-d798-45ee-b464-2a0b3375d38e r/w with ordered data mode. Quota mode: disabled.
 [    2.184120] EXT4-fs (sda3): mounted filesystem 542587c5-56bd-4ef5-b9cd-8b23fcb4885f r/w with ordered data mode. Quota mode: disabled.
-[   34.292957] systemd-hostnam (232) used greatest stack depth: 12816 bytes left
-[   35.317372] systemd-udevd (165) used greatest stack depth: 12472 bytes left
-[   35.318133] systemd-udevd (153) used greatest stack depth: 11792 bytes left
