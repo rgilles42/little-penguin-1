@@ -16,7 +16,7 @@ static ssize_t ft_misc_write(struct file *file, const char __user *buf, size_t l
 	ssize_t l;
 
 	l = simple_write_to_buffer(tmp, sizeof(tmp), ppos, buf, len);
-	if (l == 7 && memcmp(tmp, "rgilles", l) == 0)
+	if ((l == 7 && memcmp(tmp, "rgilles", l) == 0) || (l == 8 && memcmp(tmp, "rgilles\n", l) == 0))
 		return len;
 	else
 		return -EINVAL;

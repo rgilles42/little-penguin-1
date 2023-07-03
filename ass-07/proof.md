@@ -20,3 +20,14 @@ rgilles [ ~/little-penguin-1/ass-07 ]$ sudo rmmod fortytwo
 rgilles [ ~/little-penguin-1/ass-07 ]$ cat /sys/kernel/debug/fortytwo/foo
 cat: /sys/kernel/debug/fortytwo/foo: No such file or directory
 ```
+
+The locking mechanism with kernel mutexes allow for the elimination of race conditions.  
+```sh
+> for i in {1..1000}; do echo $i | sudo tee /sys/kernel/debug/fortytwo/foo >/dev/null; cat /sys/kernel/debug/fortytwo/foo; done
+1
+2
+3
+...
+1000
+```
+No numbers are skipped or repeated twice, even though this for-loop should have a high entropy in terms of order of execution.

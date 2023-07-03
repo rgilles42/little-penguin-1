@@ -23,7 +23,7 @@ static ssize_t ft_id_write(struct file *file, const char __user *buf, size_t len
 	ssize_t l;
 
 	l = simple_write_to_buffer(str, 8, ppos, buf, len);
-	if (l == 7 && memcmp(str, "rgilles", l) == 0)
+	if ((l == 7 && memcmp(str, "rgilles", l) == 0) || (l == 8 && memcmp(str, "rgilles\n", l) == 0))
 		return len;
 	else
 		return -EINVAL;
